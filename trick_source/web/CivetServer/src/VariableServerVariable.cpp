@@ -2,6 +2,8 @@
 #include "../include/VariableServerVariable.hh"
 #include <math.h> // for fpclassify
 #include <iomanip> // for setprecision
+#include <stdarg.h>
+#include <cstring>
 
 
 VariableServerVariable::VariableServerVariable(REF2 * ref ) {

@@ -8,7 +8,11 @@ LIBRARY DEPENDENCIES:
 
 #include <time.h>
 #include <vector>
-#include "mongoose/mongoose.h"
+
+#ifndef SWIG
+#include "civet/CivetServer.h"
+#endif
+
 #include <iostream>
 #include <trick/reference.h>
 

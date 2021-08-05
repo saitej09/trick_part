@@ -116,7 +116,10 @@ TEST_F(GetTimeOfDayClockTest, ClockSpin) {
     tim_curr = timclk->wall_clock_time();
 
     dClk.clock_spin(tim_curr + spin_time);
-    EXPECT_EQ((timclk->wall_clock_time() - tim_curr), spin_time);
+
+    // We know that the time difference must be at least as long as the spin_time.
+    // But that's all we know.
+    EXPECT_GE((timclk->wall_clock_time() - tim_curr), spin_time);
 
     delete timclk;
 }

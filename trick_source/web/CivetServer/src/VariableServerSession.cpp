@@ -11,6 +11,8 @@ LIBRARY DEPENDENCIES:
 #include <iomanip> // for setprecision
 #include <fstream>
 #include <algorithm>
+#include <cstring>
+#include <stdarg.h>
 #include "trick/memorymanager_c_intf.h"
 #include "trick/input_processor_proto.h"
 #include "trick/exec_proto.h"
@@ -65,7 +67,7 @@ void VariableServerSession::sendMessage() {
          ss << "]}" << std::endl;
         std::string tmp = ss.str();
         const char * message = tmp.c_str();
-        mg_send_websocket_frame(connection, WEBSOCKET_OP_TEXT, message, strlen(message));
+        mg_websocket_write(connection, MG_WEBSOCKET_OPCODE_TEXT, message, strlen(message));
         dataStaged = false;
     }
 }
@@ -209,7 +211,7 @@ int VariableServerSession::sendErrorMessage(const char* fmt, ... ) {
     sprintf(msgText, "{ \"msg_type\" : \"error\",\n"
                      "  \"error\" : \"%s\"}\n", errText);
 
-    mg_send_websocket_frame(connection, WEBSOCKET_OP_TEXT, msgText, strlen(msgText));
+    mg_websocket_write(connection, MG_WEBSOCKET_OPCODE_TEXT, msgText, strlen(msgText));
     return (0);
 }
 
@@ -241,7 +243,7 @@ int VariableServerSession::sendSieMessage(void) {
     ss << "}";
     std::string tmp = ss.str();
     const char* message = tmp.c_str();
-    mg_send_websocket_frame(connection, WEBSOCKET_OP_TEXT, message, strlen(message));
+    mg_websocket_write(connection, MG_WEBSOCKET_OPCODE_TEXT, message, strlen(message));
     return 0;
 }
 
@@ -262,7 +264,7 @@ int VariableServerSession::sendUnitsMessage(const char* vname) {
                 ) ? (*it)->getUnits() : "--") << "\"}";
             std::string tmp = ss.str();
             const char* message = tmp.c_str();
-            mg_send_websocket_frame(connection, WEBSOCKET_OP_TEXT, message, strlen(message));
+            mg_websocket_write(connection, MG_WEBSOCKET_OPCODE_TEXT, message, strlen(message));
             return 0;
         }
     }
