@@ -7,7 +7,11 @@ PURPOSE: (Represent the state of a variable server websocket connection.)
 
 #include <vector>
 #include <string>
-#include "mongoose/mongoose.h"
+
+#ifndef SWIG
+#include "civet/CivetServer.h"
+#endif
+
 #include "trick/WebSocketSession.hh"
 #include "VariableServerVariable.hh"
 
