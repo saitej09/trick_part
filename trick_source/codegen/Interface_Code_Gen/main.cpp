@@ -138,7 +138,7 @@ int main(int argc, char * argv[]) {
     std::shared_ptr<clang::TargetOptions> shared_to  = std::make_shared<clang::TargetOptions>(to) ;
     clang::TargetInfo *pti = clang::TargetInfo::CreateTargetInfo(ci.getDiagnostics(), shared_to);
     ci.setTarget(pti);
-    ci.createPreprocessor(clang::TU_Complete);
+    ci.createPreprocessor(clang::TU_Prefix);
 #else
     clang::TargetOptions * to = new clang::TargetOptions() ;
     if ( m32 ) {
